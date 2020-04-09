@@ -24,5 +24,5 @@ npm run dev
 npm run build
 
 
-
-
+![alt 效果图](https://github.com/alanjiang/vue-amap-search/blob/master/snapshot.png)
+https://github.com/alanjiang/vue-amap-search/blob/master/snapshot.png

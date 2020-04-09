@@ -1,0 +1,32 @@
+npm install stylus --save-dev
+npm install stylus-loader --save-dev
+
+
+
+{
+
+ "location":{"O":31.25952995315253,"M":121.4629177778321,"lng":121.462918,"lat":31.25953},
+
+"address":"静安区共和新路949号","name":"上海市静安区芷江西路街道共和新路上海火车头体育场","isMoved":false
+
+}
+
+
+地图点击事件：
+
+
+result:{"info":"OK",
+"regeocode":
+{"addressComponent":
+
+{"citycode":"0421","adcode":"211321","businessAreas":[],"neighborhoodType":"","neighborhood":"","building":"","buildingType":"","street":"","streetNumber":"",
+"province":"辽宁省","city":"朝阳市",
+"district":"朝阳县","township":"柳城街道"},
+
+"formattedAddress":"辽宁省朝阳市朝阳县柳城街道沟里","roads":[],"crosses":[],"pois":[{"id":"B01A506G79","name":"沟里","type":"地名地址信息;普通地名;村庄级地名","address":"朝阳县","distance":417,"tel":"",
+
+"location":{"O":41.444656,"M":120.46314000000001,"lng":120.46314,"lat":41.444656},"direction":"东","businessArea":""}],
+
+
+
+"aois":[]}}

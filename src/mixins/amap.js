@@ -14,6 +14,7 @@ exports.amapmixinApp = {
                 },
                 address: '',
                 name: '',
+                district:'',//省市区行政区
                 isMoved: true
             },
             editingPolygon: {},
@@ -69,6 +70,9 @@ exports.amapmixinApp = {
                     //TODO 针对选中的poi实现自己的功能
                     console.log('autocomplate select event');
                     vm.autocomplateInput = e.poi.name;
+                    vm.selectedPoi.district = e.poi.district
+                    console.log('>>>select json:'+JSON.stringify(e.poi));
+                    
                     vm.placeSearch.search(e.poi.name, function (status, result) {
                         if (status === 'complete' && result.info === 'OK') {
                             // 清除所有覆盖物
@@ -99,13 +103,24 @@ exports.amapmixinApp = {
                 var position = data.obj.getPosition();
                 vm.geocoder.getAddress(position, function (status, result) {
                     if (status === 'complete' && result.info === 'OK') {
-                        console.log(result);
+                        console.log('=>地图鼠标单击事件result:'+JSON.stringify(result));
                         var _address = result.regeocode.addressComponent;
+                        var district='';
+                        if(_address.district){
+                        	district = _address.province+_address.city+_address.district;
+                        }else{
+                        	district = _address.province+_address.city;
+                        }
+                        vm.selectedPoi.district = district;
                         var poi = {
-                            location: position,
-                            address: _address.district + _address.street + _address.streetNumber,
-                            name: result.regeocode.formattedAddress
+                             location: position,
+                             address: _address.district + _address.street + _address.streetNumber,
+                             name: result.regeocode.formattedAddress
                         };
+                        vm.selectedPoi.location.lat = result.regeocode.location.lat;
+                        vm.selectedPoi.location.lng = result.regeocode.location.lng;
+                        
+                        
                         vm.renderSearchMarker([poi], true);
                     }
                 });

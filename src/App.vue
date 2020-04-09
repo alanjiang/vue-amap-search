@@ -17,11 +17,11 @@
     <div class="map-address">
     
      
-     <p><code>用户输入 </code> {{userInput}}</p>
-     <p v-show="pickedLocation.location && pickedLocation.location.lat">用户点击确定后的经纬度 {{pickedLocation.location.lat}},{{pickedLocation.location.lng}}</p>
-     <p v-show="pickedLocation.location"> {{pickedLocation.name}}</p>
-     <p v-show="pickedLocation.address"> {{pickedLocation.address}}</p>
-     <p v-show="pickedLocation.district"> {{pickedLocation.district}}</p>
+     <p>搜索关键词{{userInput}}</p>
+     <p v-show="pickedLocation.location && pickedLocation.location.lat">经纬度 ({{pickedLocation.location.lat}},{{pickedLocation.location.lng}})</p>
+     <p v-show="pickedLocation.location">地名: {{pickedLocation.name}}</p>
+     <p v-show="pickedLocation.address">地址： {{pickedLocation.address}}</p>
+     <p v-show="pickedLocation.district">行政区： {{pickedLocation.district}}</p>
     </div>
     
     

@@ -117,8 +117,6 @@ exports.amapmixinApp = {
                              address: _address.district + _address.street + _address.streetNumber,
                              name: result.regeocode.formattedAddress
                         };
-                        vm.selectedPoi.location.lat = result.regeocode.location.lat;
-                        vm.selectedPoi.location.lng = result.regeocode.location.lng;
                         
                         
                         vm.renderSearchMarker([poi], true);

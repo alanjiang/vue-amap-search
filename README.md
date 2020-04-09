@@ -122,3 +122,8 @@ export default {
 
 
 ```
+
+> 如果对您有用, Buy me a cup of coffee
+
+![alt 鹏哥](https://github.com/alanjiang/vue-amap-search/blob/master/wechat.jpeg)
+

@@ -76,6 +76,7 @@ exports.default = {
         }
     },
     mounted: function () {
+    	 alert('init start')
         // 初始化 domId
         this.initAmap('amap-container', [this.defaultLat, this.defaultLng]);
         /**
@@ -93,6 +94,7 @@ exports.default = {
         }
         // 初始化 自动完成 domId ''代表默认全国
         this.initAutocomplate("autocomplate-input", searchCount, this.defaultCity);
+        alert('init complete')
     },
     mixins: [amap_1.amapmixinApp],
 };

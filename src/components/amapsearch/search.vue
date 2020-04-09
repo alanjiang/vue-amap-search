@@ -30,7 +30,7 @@
 </template>
 
 <script>
-module.exports = require('./search.ts').default
+module.exports = require('./search.js').default
 </script>
 
 <style lang="less">

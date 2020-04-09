@@ -12,25 +12,14 @@ function assetsPath(_path) {
 }
 
 module.exports = {
-  entry: './src/main.ts',
+  entry: './src/main.js',
   output: {
-    path: resolve('dist/example'),
+    path: resolve('mapmobile'),
     filename: 'build.js'
   },
   module: {
     rules: [
-      {
-        test: /\.ts$/,
-        exclude: /node_modules|vue\/src/,
-        use: [
-          {
-            loader: 'ts-loader',
-            options: {
-              appendTsSuffixTo: [/\.vue$/],
-              // transpileOnly: true
-            }
-          }]
-      },
+      
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
@@ -54,6 +43,7 @@ module.exports = {
       'vue$': 'vue/dist/vue.esm.js'
     }
   },
+  
   performance: {
     hints: false
   },

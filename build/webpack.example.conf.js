@@ -8,7 +8,7 @@ function resolve(dir) {
 }
 
 module.exports = merge(baseWebpackConfig, {
-  entry: './src/main.ts',
+  entry: './src/main.js',
   output: {
     path: resolve('dist/example'),
     filename: 'build.js'

@@ -6,7 +6,7 @@ var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 module.exports = merge(baseWebpackConfig, {
   output: {
-      publicPath: '/dist/example', // used for devServer
+      publicPath: '/mapmobile/', // used for devServer
   },
   module: {
     rules: [

@@ -1,13 +1,6 @@
 # vue-amap-search
 
-> A Vue.js amap 高德地图搜索功能组件
-
-## Demo
-
-http://www.devmeng.com/vue-amap-search/
-
-
-
+> A Vue.js amap 高德地图搜索功能组件,自动完成、提示输入、地图锚点功能。
 
 ## fork去掉typescript, 便于灵活开发应用
 
@@ -25,4 +18,3 @@ npm run build
 
 
 ![alt 效果图](https://github.com/alanjiang/vue-amap-search/blob/master/snapshot.png)
-https://github.com/alanjiang/vue-amap-search/blob/master/snapshot.png

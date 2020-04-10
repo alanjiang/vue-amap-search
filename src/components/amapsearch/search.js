@@ -14,6 +14,7 @@ exports.default = {
         autocomplateInput: function (val, oldVal) {
             this.$emit('userInput', val);
         },
+        //经纬度有改变触发pickedLocation事件
         'selectedPoi.location.lat': function selectedPoiLocation(newVal, oldVal) {
             /**
              * 如果不显示确定按钮, 拖到那里是哪里的话,
@@ -22,6 +23,7 @@ exports.default = {
             if (this.autoConfirm) {
                 this.selectedPoi.isMoved = false;
                 var loc = JSON.stringify(this.selectedPoi);
+               
                 this.$emit('pickedLocation', JSON.parse(loc));
             }
         }
@@ -67,6 +69,19 @@ exports.default = {
         }
     },
     methods: {
+    	
+    	changePicker: function () {
+    		
+    		   if (this.autoConfirm) {
+                this.selectedPoi.isMoved = false;
+                var loc = JSON.stringify(this.selectedPoi);
+                //不通过经纬度改变触发，获取行政区域后触发 amap.js
+                this.$emit('pickedLocation', JSON.parse(loc));
+            }
+    		
+    	},
+    	
+    	
         setMarkerLocation: function () {
             if (this.autoConfirm == false) {
                 this.selectedPoi.isMoved = false;

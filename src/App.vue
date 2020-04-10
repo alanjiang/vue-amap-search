@@ -16,12 +16,14 @@
     
     <div class="map-address">
     
-     
-     <p>搜索关键词{{userInput}}</p>
-     <p v-show="pickedLocation.location && pickedLocation.location.lat">经纬度 ({{pickedLocation.location.lat}},{{pickedLocation.location.lng}})</p>
-     <p v-show="pickedLocation.location">地名: {{pickedLocation.name}}</p>
-     <p v-show="pickedLocation.address">地址： {{pickedLocation.address}}</p>
-     <p v-show="pickedLocation.district">行政区： {{pickedLocation.district}}</p>
+     <p v-show="pLocation.location && pLocation.location.lat">经纬度: ({{pLocation.location.lat}},{{pLocation.location.lng}})</p>
+     <p v-show="pLocation.location">地名: {{pLocation.name}}</p>
+     <p v-show="pLocation.address">地址： {{pLocation.address}}</p>
+     <p v-show="pLocation.province">省级行政区：{{pLocation.province}}</p>
+     <p v-show="pLocation.city">市级行政区：{{pLocation.city}}</p>
+     <p v-show="pLocation.district">区级行政区：{{pLocation.district}}</p>
+      <p v-show="pLocation.citycode">citycode：{{pLocation.citycode}}</p>
+      <p v-show="pLocation.adcode">adcode：{{pLocation.adcode}}</p>
     </div>
     
     
@@ -36,7 +38,7 @@ export default {
   data() {
     return {
       userInput: '', 
-      pickedLocation: {
+      pLocation: {
         location: { lat:0,lng:0 },
         address: '',
         name: '',
@@ -53,11 +55,50 @@ export default {
      handleUserInput(input){
         this.userInput = input
      },
+     
+     /*
+        selectedPoi: {
+                location: {
+                    lat: 0,
+                    lng: 0
+                },
+                address: '',
+                name: '',
+                province: '',
+                city:'',
+                district:'',
+                citycode:'',
+                adcode: '',
+                isMoved: true
+            },
+     
+     
+     */
+     
+     
      handlePickedLocation(picker){
-         this.pickedLocation.location = {'lat':picker.location.lat,'lng':picker.location.lng}
-         this.pickedLocation.name = picker.name;
-         this.pickedLocation.address = picker.address;
-         this.pickedLocation.district = picker.district;
+         this.pLocation.location = {'lat':picker.location.lat,'lng':picker.location.lng}
+         this.pLocation.name = picker.name;
+         this.userInput = this.pLocation.name
+         this.pLocation.address = picker.address;
+         if(picker.province){
+           this.pLocation.province = picker.province;
+         }
+         if(picker.city){
+           this.pLocation.city = picker.city;
+         }
+         if(picker.district){
+           this.pLocation.district = picker.district;
+         }
+         if(picker.citycode){
+            this.pLocation.citycode = picker.citycode;
+         }
+         if(picker.adcode){
+             this.pLocation.adcode = picker.adcode;
+         }
+        
+        
+         
          console.log('picker:'+JSON.stringify(picker))
      }
      
@@ -81,10 +122,13 @@ export default {
     .map-search-box
       border-radius: 15px
     .map-address
-      font-color: #000
-      font-size: 13px
-      line-height: 20px
-      padding: 10px 15px
+      flex: row
+      align-items: left
+      p
+        font-color: #000
+        font-size: 13px
+        line-height: 20px
+        padding: 10px 15px
     
 
 </style>

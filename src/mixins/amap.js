@@ -5,6 +5,7 @@ exports.amapmixinApp = {
             map: {},
             autocomplete: {},
             placeSearch: {},
+            geocoderSearch: {},
             amapCounty: {},
             geocoder: {},
             selectedPoi: {
@@ -14,7 +15,11 @@ exports.amapmixinApp = {
                 },
                 address: '',
                 name: '',
-                district:'',//省市区行政区
+                province: '',
+                city:'',
+                district:'',
+                citycode:'',
+                adcode: '',
                 isMoved: true
             },
             editingPolygon: {},
@@ -61,20 +66,77 @@ exports.amapmixinApp = {
                     input: domContainer //使用联想输入的input的id
                 };
                 vm.autocomplete = new AMap.Autocomplete(autoOptions);
+                
                 vm.placeSearch = new AMap.PlaceSearch({
                     city: cityname,
                     map: '',
                     pageSize: pageSize
                 });
+                
+                
                 AMap.event.addListener(vm.autocomplete, "select", function (e) {
                     //TODO 针对选中的poi实现自己的功能
                     console.log('autocomplate select event');
-                    vm.autocomplateInput = e.poi.name;
+                    console.log("=>e:"+JSON.stringify(e));
+                    vm.autocomplateInput = e.poi.name
+                    vm.selectedPoi.name = e.poi.name
+                    vm.selectedPoi.address = e.poi.address
                     vm.selectedPoi.district = e.poi.district
+                    vm.selectedPoi.location.lat = e.poi.location.lat
+                    vm.selectedPoi.location.lng = e.poi.location.lng
                     console.log('>>>select json:'+JSON.stringify(e.poi));
+                    var city_code =''
+                    
+                    if(e.poi.adcode){
+                    	city_code  = e.poi.adcode
+                    }else if(e.poi.citycode){
+                    	city_code = e.poi.citycode
+                    }
+                    if(e.poi.adcode){
+                    	vm.selectedPoi.adcode = e.poi.adcode
+                    }
+                    if(e.poi.citycode){
+                    	vm.selectedPoi.citycode = e.poi.citycode
+                    }
+                  
+               
+                    console.log('**city_code='+city_code)
+                    /**** start 经纬度查行政区 ****/
+                    vm.geocoder = new AMap.Geocoder({
+                    	     
+                    	    city: city_code
+                     })
+                    console.log('vm.geocoder ='+vm.geocoder )
+                    var llat = [vm.selectedPoi.location.lng,vm.selectedPoi.location.lat]
+                   
+                    vm.geocoder.getAddress(llat, function (status, result) {
+                    	console.log('server:'+status)
+                        if (status === 'complete' && result.info === 'OK') {
+                            console.log('行政区查找结果:'+JSON.stringify(result));
+                            vm.selectedPoi.name = result.regeocode.formattedAddress
+                            vm.selectedPoi.province = result.regeocode.addressComponent.province
+                            vm.selectedPoi.city = result.regeocode.addressComponent.city
+                            vm.selectedPoi.district = result.regeocode.addressComponent.district
+                            if(result.regeocode.addressComponent.citycode){
+                            	vm.selectedPoi.citycode = result.regeocode.addressComponent.citycode
+                            }
+                            if(result.regeocode.addressComponent.adcode){
+                            	vm.selectedPoi.adcode = result.regeocode.addressComponent.adcode
+                            }
+                            
+                            vm.changePicker();//触发 pickedLocation事件
+                        }
+                    });
+                    	  
+                    
+                     /**** end 经纬度查行政区 ****/
+                    
+                    
                     
                     vm.placeSearch.search(e.poi.name, function (status, result) {
                         if (status === 'complete' && result.info === 'OK') {
+                        	
+                        	console.log('=>place search result:'+JSON.stringify(result))
                             // 清除所有覆盖物
                             vm.map.clearMap();
                             // 绘制自己的坐标点
@@ -101,24 +163,43 @@ exports.amapmixinApp = {
             vm.mouseTool.on('draw', function (data) {
                 vm.map.clearMap();
                 var position = data.obj.getPosition();
+                
+                vm.selectedPoi.location.lat = position.lat
+                vm.selectedPoi.location.lng = position.lng
+                
+                console.log('=>position:'+JSON.stringify(position))
                 vm.geocoder.getAddress(position, function (status, result) {
                     if (status === 'complete' && result.info === 'OK') {
                         console.log('=>地图鼠标单击事件result:'+JSON.stringify(result));
                         var _address = result.regeocode.addressComponent;
-                        var district='';
-                        if(_address.district){
-                        	district = _address.province+_address.city+_address.district;
-                        }else{
-                        	district = _address.province+_address.city;
-                        }
-                        vm.selectedPoi.district = district;
+                        
+                        
                         var poi = {
                              location: position,
                              address: _address.district + _address.street + _address.streetNumber,
                              name: result.regeocode.formattedAddress
                         };
+                       
+                        vm.selectedPoi.name = poi.name
+                        vm.selectedPoi.address = poi.address
+                        if(result.regeocode.addressComponent.province){
+                        	vm.selectedPoi.province = result.regeocode.addressComponent.province
+                        }
+                        if(result.regeocode.addressComponent.city){
+                        	vm.selectedPoi.city = result.regeocode.addressComponent.city
+                        }
+                        if(result.regeocode.addressComponent.district){
+                        	vm.selectedPoi.district = result.regeocode.addressComponent.district
+                        }
                         
+                        if(result.regeocode.addressComponent.citycode){
+                        	vm.selectedPoi.citycode = result.regeocode.addressComponent.citycode
+                        }
+                        if(result.regeocode.addressComponent.adcode){
+                        	vm.selectedPoi.adcode = result.regeocode.addressComponent.adcode
+                        }
                         
+                        vm.changePicker();//触发 pickedLocation事件
                         vm.renderSearchMarker([poi], true);
                     }
                 });
@@ -153,11 +234,13 @@ exports.amapmixinApp = {
             var infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(0, -30) });
             var poiIndex = 0;
             var _loop_1 = function (poi) {
+            	
+            	console.log('=>renderSearchMarker:'+JSON.stringify(poi))
                 poiIndex++;
                 marker = new AMap.Marker({
                     position: poi.location,
                     map: vm.map,
-                    icon: 'http://webapi.amap.com/theme/v1.3/markers/n/mark_r' + (poiIndex) + '.png',
+                    icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_r' + (poiIndex) + '.png',
                     draggable: true
                 });
                 marker.content = vm.$refs["marker-content"];
@@ -168,6 +251,8 @@ exports.amapmixinApp = {
                     vm.selectedPoi.location = poi.location;
                     vm.selectedPoi.address = poi.address;
                     vm.selectedPoi.name = poi.name;
+                    
+                    
                     vm.selectedPoi.isMoved = this.getExtData().isMoved;
                     infoWindow.setContent(e.target.content);
                     infoWindow.open(vm.map, e.target.getPosition());
@@ -175,7 +260,7 @@ exports.amapmixinApp = {
                 // 触发一次click显示
                 marker.emit('click', { target: marker });
                 // 因为会自动触发 拖拽之后也会触发 所以在这里做检查
-                // vm.setMarkerLocation(poi);
+               
                 marker.on('dragstart', function (e) {
                     vm.map.clearInfoWindow();
                 });

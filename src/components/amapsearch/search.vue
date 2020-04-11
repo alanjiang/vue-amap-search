@@ -14,14 +14,16 @@
     <div ref="marker-content" class="marker-content" v-show="selectedPoi.location.lat">
       <div class="marker-content-header">
           <span v-show="selectedPoi.isMoved==false" class="notice-icon">&#9873;</span>
-          <span v-show="selectedPoi.isMoved==false" class="notice">已将坐标定位为</span>
+          <span v-show="selectedPoi.isMoved==false" class="notice">当前选择地址位置为</span>
           <span v-show="selectedPoi.isMoved" class="notice">坐标定位</span>
       </div>
       <div class="marker-info">
           <div class="marker-name">{{selectedPoi.name}}</div>
           <div class="marker-address">{{selectedPoi.address}}</div>
       </div>
+      <!--
       <a v-show="selectedPoi.isMoved" class="amap-search__confirm-btn" @click="setMarkerLocation(selectedPoi)">确定</a>
+      -->
     </div>
 
     <!--地图容器-->

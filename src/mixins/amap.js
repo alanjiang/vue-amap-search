@@ -2,6 +2,8 @@
 exports.amapmixinApp = {
     data: function () {
         return {
+        	
+        	infoWindow: {},
             map: {},
             autocomplete: {},
             placeSearch: {},
@@ -30,6 +32,11 @@ exports.amapmixinApp = {
         console.log('amapmixin mounted');
     },
     methods: {
+    	 
+    	clearInfoWin: function(){
+    		var vm = this
+    		vm.map.clearInfoWindow();
+    	},
         /**
          * 初始化amap对象
          */
@@ -231,7 +238,7 @@ exports.amapmixinApp = {
          */
         renderSearchMarker: function (poiList) {
             var vm = this;
-            var infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(0, -30) });
+            vm.infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(0, -30) });
             var poiIndex = 0;
             var _loop_1 = function (poi) {
             	
@@ -254,8 +261,8 @@ exports.amapmixinApp = {
                     
                     
                     vm.selectedPoi.isMoved = this.getExtData().isMoved;
-                    infoWindow.setContent(e.target.content);
-                    infoWindow.open(vm.map, e.target.getPosition());
+                    vm.infoWindow.setContent(e.target.content);
+                    vm.infoWindow.open(vm.map, e.target.getPosition());
                 });
                 // 触发一次click显示
                 marker.emit('click', { target: marker });

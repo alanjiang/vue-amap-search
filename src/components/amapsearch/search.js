@@ -87,6 +87,7 @@ exports.default = {
                 this.selectedPoi.isMoved = false;
                 var loc = JSON.stringify(this.selectedPoi);
                 this.$emit('pickedLocation', JSON.parse(loc));
+                //点击信息窗体的确定按钮，关闭窗体
             }
         }
     },

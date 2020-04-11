@@ -7,7 +7,7 @@
       :searchCount="2"
       :autoConfirm="true"
       :useClick="true"
-      :width="800"
+      :width="width"
       :height="340"
       @userInput="handleUserInput"
       @pickedLocation="handlePickedLocation">
@@ -37,6 +37,7 @@ export default {
   name: 'map',
   data() {
     return {
+      width: document.body.clientWidth,
       userInput: '', 
       pLocation: {
         location: { lat:0,lng:0 },
@@ -56,24 +57,7 @@ export default {
         this.userInput = input
      },
      
-     /*
-        selectedPoi: {
-                location: {
-                    lat: 0,
-                    lng: 0
-                },
-                address: '',
-                name: '',
-                province: '',
-                city:'',
-                district:'',
-                citycode:'',
-                adcode: '',
-                isMoved: true
-            },
      
-     
-     */
      
      
      handlePickedLocation(picker){
@@ -117,14 +101,12 @@ export default {
   .map
     display: flex
     flex-direction: column
-    justify-content: center
-    align-items: center
     .map-search-box
       border-radius: 15px
     .map-address
       flex: row
-      align-items: left
       p
+        text-align: left
         font-color: #000
         font-size: 13px
         line-height: 20px

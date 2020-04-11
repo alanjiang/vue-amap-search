@@ -18,12 +18,14 @@
     
      <p v-show="pLocation.location && pLocation.location.lat">经纬度: ({{pLocation.location.lat}},{{pLocation.location.lng}})</p>
      <p v-show="pLocation.location">地名: {{pLocation.name}}</p>
+     <!--
      <p v-show="pLocation.address">地址： {{pLocation.address}}</p>
      <p v-show="pLocation.province">省级行政区：{{pLocation.province}}</p>
      <p v-show="pLocation.city">市级行政区：{{pLocation.city}}</p>
      <p v-show="pLocation.district">区级行政区：{{pLocation.district}}</p>
       <p v-show="pLocation.citycode">citycode：{{pLocation.citycode}}</p>
       <p v-show="pLocation.adcode">adcode：{{pLocation.adcode}}</p>
+     -->
     </div>
     
     

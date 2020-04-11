@@ -1,29 +1,31 @@
-# vue-amap-search
+# 高德地图组件vue二次开发
 
 > A Vue.js amap 高德地图搜索功能组件,自动完成、提示输入、地图锚点功能。
 
-## fork去掉typescript, 便于灵活开发应用
+> 去掉typescript, 便于灵活开发应用
 
 
-# 先安装
+>先安装
 
 npm install
 
-# serve with hot reload at localhost:3030
+> serve with hot reload at localhost:3030
 npm run dev
 
-# 直接打包到mapmobile下面，以src/index.html作为模板，通过html-webpack-plugin将index.html 写入build.js 后拷贝至mapmobile
-# 将mapmobile直接上传到服务器的根路径下，可以以布服务 
+``` 直接打包到mapmobile下面，以src/index.html作为模板，通过html-webpack-plugin将index.html 写入build.js 后拷贝至mapmobile
+  将mapmobile直接上传到服务器的根路径下，访问/mapmobile/index.html即可以发布服务 
+```
 npm run build
 
 
 ![alt 效果图](https://github.com/alanjiang/vue-amap-search/blob/master/snapshot.png)
 
-# 新增关键词搜索地址列表时，获取行政区
+> 新增关键词搜索地址列表时，获取行政区
 ![alt 效果图](https://github.com/alanjiang/vue-amap-search/blob/master/address.png)
+> 手机效果
+![alt 效果图](https://github.com/alanjiang/vue-amap-search/blob/master/mobile.jpeg)
 
-
-# 地图示例代码App.vue
+>地图示例代码App.vue
 
 ```
 <template>
